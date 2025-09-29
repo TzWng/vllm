@@ -368,3 +368,7 @@ class LLMEngine:
         if dp_group := getattr(self, "dp_group",
                                None) and not self.external_launcher_dp:
             stateless_destroy_torch_distributed_process_group(dp_group)
+
+    def forward_step(self, request_id: str, input_ids: List[int]):
+        outputs = self.model_executor.forward_step(request_id, input_ids)
+        return outputs.logits 
